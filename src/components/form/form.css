@@ -389,3 +389,21 @@
   border-color: var(--primary-color);
   box-shadow: 0 0 20px var(--primary-color);
 }
+
+/* ---------------------- FORM_GENERATOR ---------------------- */
+
+.fileds-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fileds-wrapper > * {
+  width: 100%;
+}
+
+.error-message {
+  font-size: 12px;
+  font-weight: 400;
+  color: red;
+}
