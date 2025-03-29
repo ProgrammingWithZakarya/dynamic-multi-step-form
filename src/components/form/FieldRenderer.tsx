@@ -15,7 +15,6 @@ const FieldsRenderer = (props: FieldsRendererProps) => {
   const { fields, validationErrors, formValues, setFormValues } = props;
 
   const updateFieldValue = (fieldName: string, value: FieldValue) => {
-    console.log(fieldName, value);
 
     setFormValues((prevValues) => ({
       ...prevValues,

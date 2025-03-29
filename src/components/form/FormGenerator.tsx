@@ -59,10 +59,8 @@ const FormGenerator = (props: FormGeneratorProps) => {
 
   const goToNextStep = () => {
     const validationErrors = validateStep(currentStep.fields || [], formValues);
-    console.log("formValues:", formValues);
 
     if (Object.keys(validationErrors).length > 0) {
-      console.log("Validation Errors: ", validationErrors);
       setValidationErrors(validationErrors);
       return false;
     }
