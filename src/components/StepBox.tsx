@@ -1,17 +1,26 @@
-import { MouseEventHandler, PropsWithChildren } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 
 interface StepBoxProps {
+  icon?: ReactNode;
+  label: string;
   className?: string;
-  onClick?: MouseEventHandler<HTMLDivElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
-const StepBox = (props: PropsWithChildren<StepBoxProps>) => {
-  const { className = "", onClick, children } = props;
+const StepBox = (props: StepBoxProps) => {
+  const { icon, label, onClick, className = "" } = props;
 
   return (
-    <div className={`step-box center ${className}`} onClick={onClick}>
-      {children}
-    </div>
+    <button
+      className={`step-box center ${className}`}
+      type="button"
+      onClick={onClick}
+    >
+      <div>
+        {!!icon && <span className="step-box__icon">{icon}</span>}
+        <span className="step-box__label">{label}</span>
+      </div>
+    </button>
   );
 };
 
