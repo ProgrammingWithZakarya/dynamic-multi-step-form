@@ -25,20 +25,18 @@ const TextField = (props: TextFieldProps) => {
 
   return (
     <div className={`input-container ${className}`}>
-      <label className="label">{label}</label>
+      <label className="input-container__label">{label}</label>
       <input
         placeholder={placeholder}
-        className="input"
+        className="input-container__input"
         required={isRequired}
         onChange={onChange}
         name={name}
         defaultValue={defaultValue}
       />
-      <div>
-        {!!errorMessage && (
-          <span className="error-message">{errorMessage}</span>
-        )}
-      </div>
+      {!!errorMessage && (
+        <span className="input-container__error-message">{errorMessage}</span>
+      )}
     </div>
   );
 };
