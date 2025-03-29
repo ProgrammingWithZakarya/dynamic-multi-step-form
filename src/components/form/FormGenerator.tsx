@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 import { Fields, FormData, Step, Steps } from "../../typs";
-import Center from "../Center";
-import StepBox from "../StepBox";
 import Button from "../Button";
+import StepBox from "../StepBox";
 import FieldsRenderer from "./FieldRenderer";
 
 interface FormGeneratorProps {
@@ -32,7 +32,7 @@ const FormGenerator = (props: FormGeneratorProps) => {
       const value = formData[name];
 
       if (!!isRequired && !value) {
-        errors[name] = `${(field.props as any)?.label || name} is required`;
+        errors[name] = `Bitte ${(field.props as any)?.label || name} eingeben`;
       }
 
       if (typeof value === "string") {
@@ -84,7 +84,15 @@ const FormGenerator = (props: FormGeneratorProps) => {
 
   return (
     <div className="form-generator-container">
-      {!!currentStep.title && <h2>{currentStep.title}</h2>}
+      {!!currentStep.title && (
+        <h2
+          style={{
+            marginBottom: currentStep.description ? "1rem" : "2.5rem",
+          }}
+        >
+          {currentStep.title}
+        </h2>
+      )}
       {!!currentStep.description && <p>{currentStep.description}</p>}
 
       {!!currentStep.fields?.length && (
@@ -97,42 +105,40 @@ const FormGenerator = (props: FormGeneratorProps) => {
       )}
 
       {!!currentStep?.steps && currentStep?.steps?.length > 1 && (
-        <Center gap={16}>
+        <div className="step-boxes-container">
           {currentStep.steps.map((stepItem) => (
-            <StepBox key={stepItem.name} onClick={() => goToStep(stepItem)}>
-              <h4>{stepItem.title}</h4>
-            </StepBox>
+            <StepBox
+              key={stepItem.name}
+              label={stepItem.name}
+              icon={stepItem.icon}
+              onClick={() => goToStep(stepItem)}
+            />
           ))}
-        </Center>
+        </div>
       )}
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <div>
+      <div className="steps-handlers-wrapper">
+        <div className="prev-button-wrapper">
           {stepPath.length !== 1 && (
             <Button
               type="button"
+              variant="secondary"
               onClick={goToPrevStep}
+              icon={<GoArrowLeft />}
               isDisabled={stepPath.length === 1}
-            >
-              Prev
-            </Button>
+            ></Button>
           )}
         </div>
 
-        <div>
+        <div className="next-button-wrapper">
           {currentStep.steps?.length === 1 && (
             <Button
               type="button"
               onClick={goToNextStep}
+              icon={<GoArrowRight />}
               isDisabled={!currentStep.steps && !currentStep.steps[0]}
             >
-              Next
+              Weiter
             </Button>
           )}
         </div>

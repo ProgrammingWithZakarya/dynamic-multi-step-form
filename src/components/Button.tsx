@@ -6,17 +6,17 @@ interface ButtonProps {
   onClick?(event: MouseEvent): void;
   icon?: ReactNode;
   isDisabled?: boolean;
-  label?: string;
+  children?: ReactNode;
   variant?: "primary" | "secondary";
 }
 
 const Button = (props: ButtonProps) => {
   const {
-    label,
     icon,
     className = "",
     variant = "primary",
     isDisabled,
+    children,
     ...rest
   } = props;
   return (
@@ -25,7 +25,7 @@ const Button = (props: ButtonProps) => {
       disabled={isDisabled}
       {...rest}
     >
-      {!!label && <span className="button__label">{label}</span>}
+      {!!children && <span className="button__label">{children}</span>}
       {!!icon && <span className="button__icon-wrapper">{icon}</span>}
     </button>
   );

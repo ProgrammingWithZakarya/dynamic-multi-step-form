@@ -1,12 +1,15 @@
 import { form } from "./assets/data";
-import Center from "./components/Center";
+import Card from "./components/Card";
+import Container from "./components/Container";
 import { FormGenerator } from "./components/form";
 
 function App() {
   return (
-    <Center asCard>
-      <FormGenerator form={form} />
-    </Center>
+    <Container>
+      <Card>
+        <FormGenerator form={form} />
+      </Card>
+    </Container>
   );
 }
 

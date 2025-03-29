@@ -50,9 +50,9 @@
   background-color: #ffffff;
 }
 
-.step-box-container {
-  display: flex;
-  flex-direction: column;
+.step-boxes-container {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -68,6 +68,7 @@
     text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
+  background-color: transparent;
 }
 
 .step-box:hover {
@@ -119,11 +120,11 @@
     padding: 1.5rem;
   }
 
-  .step-box-container {
-    flex-direction: row;
+  .step-boxes-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .step-box {
-    padding: 1.5rem;
+    padding: 1.5rem 8vw;
   }
 }
