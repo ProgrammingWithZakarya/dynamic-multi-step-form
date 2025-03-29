@@ -4,6 +4,7 @@ import { PhoneNumberFieldProps } from "./components/form/PhoneNumberFiled";
 import { RadioGroupProps } from "./components/form/RadioGroup";
 import { SwitchProps } from "./components/form/Switch";
 import { TextFieldProps } from "./components/form/TextField";
+import { SliderProps } from "./components/form/Slider";
 
 export type Field =
   | { type: "text"; props: TextFieldProps }
@@ -12,7 +13,8 @@ export type Field =
   | { type: "checkbox"; props: CheckboxGroupProps }
   | { type: "phone"; props: PhoneNumberFieldProps }
   | { type: "radio"; props: RadioGroupProps }
-  | { type: "switch"; props: SwitchProps };
+  | { type: "switch"; props: SwitchProps }
+  | { type: "slider"; props: SliderProps };
 
 export type Fields = Field[];
 

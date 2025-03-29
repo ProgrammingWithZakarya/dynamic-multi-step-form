@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { PhoneNumberField, RadioGroup, Switch, TextField } from ".";
 import { Field, FieldValue, FormData } from "../../typs";
 import CheckboxGroup from "./CheckboxGroup";
+import Slider from "./Slider";
 
 interface FieldsRendererProps {
   fields: Field[];
@@ -31,11 +32,7 @@ const FieldsRenderer = (props: FieldsRendererProps) => {
             return (
               <TextField
                 key={field.props.name}
-                name={field.props?.name}
-                label={field.props?.label}
-                placeholder={field.props?.placeholder}
-                isRequired={field.props?.isRequired}
-                className={field.props?.className}
+                {...field.props}
                 errorMessage={validationErrors[field.props.name]}
                 defaultValue={formValues[field.props.name] as string}
                 onChange={(e) =>
@@ -43,63 +40,56 @@ const FieldsRenderer = (props: FieldsRendererProps) => {
                 }
               />
             );
+
           case "select":
             return (
               <RadioGroup
                 key={field.props.name}
-                name={field.props?.name}
-                options={field.props.options || []}
-                value={field.props?.value}
+                {...field.props}
                 onChange={(value) => updateFieldValue(field.props.name, value)}
                 errorMessage={validationErrors[field.props.name]}
-                isDisabled={field.props?.isDisabled}
               />
             );
+
           case "checkbox":
             return (
               <CheckboxGroup
                 key={field.props.name}
-                name={field.props?.name}
-                options={field.props.options}
-                isDisabled={field.props.isDisabled}
-                isRequired={field.props.isRequired}
-                value={field.props?.value}
+                {...field.props}
                 errorMessage={validationErrors[field.props.name]}
                 onChange={(values) =>
                   updateFieldValue(field.props.name, values)
                 }
               />
             );
+
           case "radio":
             return (
               <RadioGroup
                 key={field.props.name}
-                name={field.props?.name}
-                options={field.props.options || []}
-                value={field.props?.value}
+                {...field.props}
                 onChange={(value) => updateFieldValue(field.props.name, value)}
                 errorMessage={validationErrors[field.props.name]}
               />
             );
+
           case "switch":
             return (
               <Switch
                 key={field.props.name}
-                name={field.props?.name}
-                className={field.props?.className}
-                defaultChecked={field.props?.defaultChecked}
+                {...field.props}
                 onChange={(e) =>
                   updateFieldValue(field.props.name, e.target.checked)
                 }
                 errorMessage={validationErrors[field.props.name]}
               />
             );
+
           case "phone":
             return (
               <PhoneNumberField
                 key={field.props.name}
-                name={field.props?.name}
-                label={field.props?.label}
+                {...field.props}
                 onChange={(e) =>
                   updateFieldValue(field.props.name, e.target.value)
                 }
@@ -107,6 +97,21 @@ const FieldsRenderer = (props: FieldsRendererProps) => {
                 errorMessage={validationErrors[field.props.name]}
               />
             );
+
+          case "slider":
+            return (
+              <Slider
+                key={field.props.name}
+                {...field.props}
+                onChange={(value) => updateFieldValue(field.props.name, value)}
+                defaultValue={
+                  (formValues[field.props.name] as string) ||
+                  field.props.defaultValue
+                }
+                errorMessage={validationErrors[field.props.name]}
+              />
+            );
+
           default:
             return null;
         }
