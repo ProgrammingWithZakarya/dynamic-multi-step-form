@@ -1,3 +1,4 @@
+import { JSX } from "react";
 import { CheckboxGroupProps } from "./components/form/CheckboxGroup";
 import { PhoneNumberFieldProps } from "./components/form/PhoneNumberFiled";
 import { RadioGroupProps } from "./components/form/RadioGroup";
@@ -17,6 +18,7 @@ export type Fields = Field[];
 
 export interface Step {
   name: string;
+  icon?: JSX.Element;
   title: string;
   description?: string;
   steps?: Steps;
