@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 import { Fields, FormData, Step, Steps } from "../../typs";
 import Button from "../Button";
 import StepBox from "../StepBox";
 import FieldsRenderer from "./FieldRenderer";
+import { formReducer, State } from "./formReducer";
 
 interface FormGeneratorProps {
   form: Steps;
@@ -12,16 +13,14 @@ interface FormGeneratorProps {
 const FormGenerator = (props: FormGeneratorProps) => {
   const { form } = props;
 
-  const initialStep = form[0];
+  const initialState: State = {
+    stepPath: [form[0]],
+    formValues: {},
+    validationErrors: {},
+  };
 
-  const [stepPath, setStepPath] = useState<Steps>([initialStep]);
-
-  const [formValues, setFormValues] = useState<FormData>({});
-  const [vlidationErrors, setValidationErrors] = useState<
-    Record<string, string>
-  >({});
-
-  const currentStep = stepPath[stepPath.length - 1];
+  const [state, dispatch] = useReducer(formReducer, initialState);
+  const currentStep = state.stepPath[state.stepPath.length - 1];
 
   const validateStep = (fields: Fields, formData: FormData) => {
     const errors: Record<string, string> = {};
@@ -58,26 +57,20 @@ const FormGenerator = (props: FormGeneratorProps) => {
   };
 
   const goToNextStep = () => {
-    const validationErrors = validateStep(currentStep.fields || [], formValues);
-
-    if (Object.keys(validationErrors).length > 0) {
-      setValidationErrors(validationErrors);
-      return false;
+    const errors = validateStep(currentStep.fields || [], state.formValues);
+    if (Object.keys(errors).length > 0) {
+      dispatch({ type: "SET_ERRORS", payload: errors });
+      return;
     }
-    if (currentStep.steps?.length) {
-      setStepPath([...stepPath, currentStep.steps[0]]);
-      return true;
-    }
+    dispatch({ type: "NEXT_STEP" });
   };
 
   const goToPrevStep = () => {
-    if (stepPath.length > 1) {
-      setStepPath(stepPath.slice(0, -1));
-    }
+    dispatch({ type: "PREV_STEP" });
   };
 
   const goToStep = (stepItem: Step) => {
-    setStepPath([...stepPath, stepItem]);
+    dispatch({ type: "GO_TO_STEP", payload: stepItem });
   };
 
   return (
@@ -95,10 +88,15 @@ const FormGenerator = (props: FormGeneratorProps) => {
 
       {!!currentStep.fields?.length && (
         <FieldsRenderer
-          validationErrors={vlidationErrors}
+          validationErrors={state.validationErrors}
           fields={currentStep.fields}
-          formValues={formValues}
-          setFormValues={setFormValues}
+          formValues={state.formValues}
+          setFormValues={(name, value) =>
+            dispatch({
+              type: "SET_VALUE",
+              payload: { name, value },
+            })
+          }
         />
       )}
 
@@ -121,13 +119,13 @@ const FormGenerator = (props: FormGeneratorProps) => {
             currentStep.steps?.length === 1 ? "prev-button-wrapper" : ""
           }
         >
-          {stepPath.length !== 1 && (
+          {state.stepPath.length !== 1 && (
             <Button
               type="button"
               variant="secondary"
               onClick={goToPrevStep}
               icon={<GoArrowLeft />}
-              isDisabled={stepPath.length === 1}
+              isDisabled={state.stepPath.length === 1}
             ></Button>
           )}
         </div>

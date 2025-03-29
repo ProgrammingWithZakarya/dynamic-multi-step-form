@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import { PhoneNumberField, RadioGroup, Switch, TextField } from ".";
 import { Field, FieldValue, FormData } from "../../typs";
 import CheckboxGroup from "./CheckboxGroup";
@@ -8,18 +7,14 @@ interface FieldsRendererProps {
   fields: Field[];
   validationErrors: Record<string, string>;
   formValues: FormData;
-  setFormValues: Dispatch<SetStateAction<FormData>>;
+  setFormValues(name: string, value: FieldValue): void;
 }
 
 const FieldsRenderer = (props: FieldsRendererProps) => {
   const { fields, validationErrors, formValues, setFormValues } = props;
 
   const updateFieldValue = (fieldName: string, value: FieldValue) => {
-
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [fieldName]: value,
-    }));
+    setFormValues(fieldName, value);
   };
 
   return (
