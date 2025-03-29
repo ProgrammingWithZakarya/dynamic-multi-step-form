@@ -118,7 +118,11 @@ const FormGenerator = (props: FormGeneratorProps) => {
       )}
 
       <div className="steps-handlers-wrapper">
-        <div className="prev-button-wrapper">
+        <div
+          className={
+            currentStep.steps?.length === 1 ? "prev-button-wrapper" : ""
+          }
+        >
           {stepPath.length !== 1 && (
             <Button
               type="button"

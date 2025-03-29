@@ -11,11 +11,7 @@ const StepBox = (props: StepBoxProps) => {
   const { icon, label, onClick, className = "" } = props;
 
   return (
-    <button
-      className={`step-box center ${className}`}
-      type="button"
-      onClick={onClick}
-    >
+    <button className={`step-box ${className}`} type="button" onClick={onClick}>
       <div>
         {!!icon && <span className="step-box__icon">{icon}</span>}
         <span className="step-box__label">{label}</span>
