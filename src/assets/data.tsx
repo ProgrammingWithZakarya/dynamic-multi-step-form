@@ -1,5 +1,5 @@
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import { Steps } from "../typs";
+import { Fields, Steps } from "../typs";
 import { FaRegMap } from "react-icons/fa";
 import {
   BsFillPersonLinesFill,
@@ -13,30 +13,49 @@ import { MdPersonOff } from "react-icons/md";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { FiGift, FiHelpCircle, FiHome } from "react-icons/fi";
 
+const areaOfLandFields: Fields = [
+  {
+    type: "slider",
+    props: {
+      name: " area_of_land",
+      label: "Fläches",
+      defaultValue: "545",
+      min: 50,
+      max: 5000,
+      hasInput: true,
+    },
+  },
+];
+
 const StepsOfRealEstateTransaction: Steps = [
   {
     name: "Verkauf",
     title: "Wann planen Sie in etwa den Verkauf Ihrer Immobilie?",
     icon: <BsHouseUp />,
+    fields: areaOfLandFields,
   },
   {
     name: "Kauf",
     title: "Wann planen Sie in etwa den Kauf ihrer Immobilie?",
     icon: <BsHouseDown />,
+    fields: areaOfLandFields,
   },
   {
     name: "Finanzamt / Grundsteuer",
     title: "Wie groß ist die Grundstücksfläche?",
     icon: <HiOutlineClipboardDocumentList />,
+    fields: areaOfLandFields,
   },
   {
     name: "Erbe oder Schenkung",
     title: "Wie groß ist die Grundstücksfläche?",
     icon: <FiGift />,
+    fields: areaOfLandFields,
   },
   {
     name: "Vermögensaufstellung",
     title: "Wie groß ist die Grundstücksfläche?",
+    fields: areaOfLandFields,
     icon: <FiHome />,
   },
   {
@@ -45,6 +64,17 @@ const StepsOfRealEstateTransaction: Steps = [
     description:
       "Bitte geben Sie uns mehr Hintergrundinformationen für die Bewertungsanfrage:",
     icon: <FiHelpCircle />,
+    fields: [
+      {
+        type: "text",
+        props: {
+          name: "request_reason_detail",
+          label: "",
+          asTextArea: true,
+          placeholder: "Anfragegrund ...",
+        },
+      },
+    ],
   },
 ];
 
@@ -56,7 +86,7 @@ export const form: Steps = [
     steps: [
       {
         name: "Adresse",
-        title: "Adresse",
+        title: "Wo befindet sich das Grundstück?",
         icon: <HiOutlineLocationMarker />,
         fields: [
           {
